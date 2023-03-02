@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<head>
+	<meta charset="utf-8">
+	<title>Dungeon map viewer</title>
+	<style>
+/**
+# Door codes
+# 0 - O doors
+# 1 - North
+# 2 - East
+# 3 - South
+# 4 - West
+# 5 - North and East
+# 6 - North and South
+# 7 - North and West
+# 8 - East and South
+# 9 - East and West
+# A - South and West
+# B - North, East and South
+# C - North, East and West
+# D - North, South and West
+# E - East, South and West
+# F - North, East, South and West
+
+*/
+
+	td:before {
+		content: attr(class);
+		display: block;
+		text-align: center
+	}
+
+	table {
+		border: 1px solid grey;
+		border-spacing:0;
+	}
+
+	td {
+		border: 2px solid black;
+		width: 40px;
+		height: 40px;
+	}
+
+	td.d0 { border-color: white white white white; }
+	td.d1 { border-color: black white white white; }
+	td.d2 { border-color: white black white white; }
+	td.d3 { border-color: white white black white; }
+	td.d4 { border-color: white white white black; }
+	td.d5 { border-color: black black white white; }
+	td.d6 { border-color: black white black white; }
+	td.d7 { border-color: black white white black; }
+	td.d8 { border-color: white black black white; }
+	td.d9 { border-color: white black white black; }
+	td.dA { border-color: white white black black; }
+	td.dB { border-color: black black black white; }
+	td.dC { border-color: black black white black; }
+	td.dD { border-color: black white black black; }
+	td.dE { border-color: white black black black; }
+	td.dF { border-color: black black black black; }
+
+	</style>
+</head>
+<body>
+
+
+
+<table>
+<tr>
+<td class="d7"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d5"></td>
+<td class="dC"></td>
+<td class="dC"></td>
+<td class="dD"></td>
+<td class="d5"></td>
+</tr>
+<tr>
+<td class="d9"></td>
+<td class="d7"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="dB"></td>
+<td class="dA"></td>
+<td class="d3"></td>
+<td class="d3"></td>
+<td class="d6"></td>
+<td class="d8"></td>
+</tr>
+<tr>
+<td class="dA"></td>
+<td class="d3"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d5"></td>
+</tr>
+<tr>
+<td class="dC"></td>
+<td class="dC"></td>
+<td class="dD"></td>
+<td class="d5"></td>
+<td class="d7"></td>
+<td class="d1"></td>
+<td class="d1"></td>
+<td class="d1"></td>
+<td class="d5"></td>
+<td class="d9"></td>
+</tr>
+<tr>
+<td class="d9"></td>
+<td class="d4"></td>
+<td class="d6"></td>
+<td class="d0"></td>
+<td class="d8"></td>
+<td class="d9"></td>
+<td class="d9"></td>
+<td class="dE"></td>
+<td class="d4"></td>
+<td class="d8"></td>
+</tr>
+<tr>
+<td class="dA"></td>
+<td class="d8"></td>
+<td class="dC"></td>
+<td class="dA"></td>
+<td class="d5"></td>
+<td class="d9"></td>
+<td class="dE"></td>
+<td class="dD"></td>
+<td class="d8"></td>
+<td class="dC"></td>
+</tr>
+<tr>
+<td class="d7"></td>
+<td class="d6"></td>
+<td class="d8"></td>
+<td class="d7"></td>
+<td class="d8"></td>
+<td class="dA"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d8"></td>
+</tr>
+<tr>
+<td class="d9"></td>
+<td class="d7"></td>
+<td class="d6"></td>
+<td class="d8"></td>
+<td class="dC"></td>
+<td class="d7"></td>
+<td class="d5"></td>
+<td class="d7"></td>
+<td class="d1"></td>
+<td class="d5"></td>
+</tr>
+<tr>
+<td class="d9"></td>
+<td class="d9"></td>
+<td class="d7"></td>
+<td class="d1"></td>
+<td class="d8"></td>
+<td class="dE"></td>
+<td class="d4"></td>
+<td class="d2"></td>
+<td class="d9"></td>
+<td class="d9"></td>
+</tr>
+<tr>
+<td class="dA"></td>
+<td class="d3"></td>
+<td class="d8"></td>
+<td class="dA"></td>
+<td class="d6"></td>
+<td class="d6"></td>
+<td class="d8"></td>
+<td class="dE"></td>
+<td class="dE"></td>
+<td class="dE"></td>
+</tr>
+</table>
