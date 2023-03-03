@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 # TODO:
 # Help text
 # Make look show descriptions of items instead of bare names
@@ -89,16 +91,38 @@ dungeon[0][7]['door'] = {'color':'green', 'wall':'north'}
 
 # print(dungeon)
 # 
-# def printmap(dungeon):
-#     print('<table>')
-#     for y in dungeon:
-#         print('<tr>')
-#         for x in y:
-#             print('<td class="d' + x["openings"] + '"></td>')
-#         print('</tr>')
-#     print('</table>')
-# 
-# printmap(dungeon)
+def printmap(dungeon):
+    print('<table>')
+
+    done_header = False
+
+    for yidx,y in enumerate(dungeon):
+
+        if not done_header:
+            print('<tr><th></th>')
+            for xkey,xval in enumerate(y):
+                print('<th>' + str(xkey) + '</th>')
+            print('</tr>')
+            done_header = True
+
+        print('<tr>')
+        print('<th>' + str(yidx) + '</th>')
+        for xidx,x in enumerate(y):
+            css = []
+            css.append('d' + x["openings"])
+            if x['door'] != None:
+                css.append("door door-" + x['door']['color'] + " door-" + x['door']['wall'])
+            if x['item'] != None:
+                css.append("item item-" + x['item'])
+            if x['enemy'] != None:
+                css.append("enemy enemy-" + x['enemy'])
+            print('<td class="' + " ".join(css) + '"></td>')
+        print('</tr>')
+    print('</table>')
+
+if (len(sys.argv) > 1 and sys.argv[1] == "map"):
+    printmap(dungeon)
+    sys.exit()
 
 
 ## Game loop
