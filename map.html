@@ -24,33 +24,115 @@
 
 */
 
+	html,body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
 	table {
-		border: 1px solid grey;
 		border-spacing:0;
+		height: 100vh;
+		width: 100vh;
+		max-width: 100vw;
+		max-height: 100vw;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+
+	tr:nth-child(even) td:nth-child(odd),
+	tr:nth-child(odd) td:nth-child(even)
+	{
+		background-color: #ddd;
 	}
 
 	td {
 		border: 2px solid black;
-		width: 40px;
-		height: 40px;
+		position: relative;
 	}
 
-	td.d0 { border-color: white white white white; }
-	td.d1 { border-color: black white white white; }
-	td.d2 { border-color: white black white white; }
-	td.d3 { border-color: white white black white; }
-	td.d4 { border-color: white white white black; }
-	td.d5 { border-color: black black white white; }
-	td.d6 { border-color: black white black white; }
-	td.d7 { border-color: black white white black; }
-	td.d8 { border-color: white black black white; }
-	td.d9 { border-color: white black white black; }
-	td.dA { border-color: white white black black; }
-	td.dB { border-color: black black black white; }
-	td.dC { border-color: black black white black; }
-	td.dD { border-color: black white black black; }
-	td.dE { border-color: white black black black; }
-	td.dF { border-color: black black black black; }
+	td.d0 { border-width: 0px 0px 0px 0px; }
+	td.d1 { border-width: 2px 0px 0px 0px; }
+	td.d2 { border-width: 0px 2px 0px 0px; }
+	td.d3 { border-width: 0px 0px 2px 0px; }
+	td.d4 { border-width: 0px 0px 0px 2px; }
+	td.d5 { border-width: 2px 2px 0px 0px; }
+	td.d6 { border-width: 2px 0px 2px 0px; }
+	td.d7 { border-width: 2px 0px 0px 2px; }
+	td.d8 { border-width: 0px 2px 2px 0px; }
+	td.d9 { border-width: 0px 2px 0px 2px; }
+	td.dA { border-width: 0px 0px 2px 2px; }
+	td.dB { border-width: 2px 2px 2px 0px; }
+	td.dC { border-width: 2px 2px 0px 2px; }
+	td.dD { border-width: 2px 0px 2px 2px; }
+	td.dE { border-width: 0px 2px 2px 2px; }
+	td.dF { border-width: 2px 2px 2px 2px; }
+
+
+
+td.door-red-north    { border-top-width: 4px; border-top-color: red; }	
+td.door-red-east     { border-right-width: 4px; border-right-color: red; }	
+td.door-red-south    { border-bottom-width: 4px; border-bottom-color: red; }	
+td.door-red-west     { border-left-width: 4px; border-left-color: red; }	
+
+td.door-orange-north   { border-top-width: 4px; border-top-color: orange; }	       
+td.door-orange-east    { border-right-width: 4px; border-right-color: orange; }	
+td.door-orange-south   { border-bottom-width: 4px; border-bottom-color: orange; }	
+td.door-orange-west    { border-left-width: 4px; border-left-color: orange; }	
+
+td.door-yellow-north    { border-top-width: 4px; border-top-color: yellow; }	
+td.door-yellow-east     { border-right-width: 4px; border-right-color: yellow; }	
+td.door-yellow-south    { border-bottom-width: 4px; border-bottom-color: yellow; }	
+td.door-yellow-west     { border-left-width: 4px; border-left-color: yellow; }	
+
+td.door-green-north    { border-top-width: 4px; border-top-color: green; }	
+td.door-green-east     { border-right-width: 4px; border-right-color: green; }	
+td.door-green-south    { border-bottom-width: 4px; border-bottom-color: green; }	
+td.door-green-west     { border-left-width: 4px; border-left-color: green; }	
+
+span.enemy {}
+
+span.enemy:before {
+	content: "E";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 50%;
+	text-align: center;
+	background-color: pink;
+}
+span.enemy-eyeballmonster:before{ content: "👁"; }
+span.enemy-willowisp:before{ content: "🌳"; }
+span.enemy-icestatue:before{ content: "🧊"; }
+span.enemy-shadowcreature:before{ content:"🌚"; }
+span.enemy-mummy:before{ content:"🧻"; }
+span.enemy-mouthmonster:before{ content:"👄"; }
+span.enemy-goblinhermit:before{ content:"👹"; }
+
+span.item {}
+span.item:before{
+	content: "I";
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 50%;
+	height: 50%;
+	text-align: center;
+	background-color: lightgreen;
+}
+span.item-greenkey:before{ content:"🟩"; }
+span.item-orangekey:before{ content:"🟧";}
+span.item-yellowkey:before{ content:"🟨";}
+span.item-redkey:before{ content:"🟥"; }
+span.item-magicsunglasses:before{ content:"🕶"; }
+span.item-pepperspray:before{ content:"🌶"; }
+span.item-rustysword:before{ content:"⚔️"; }
+span.item-bagofholding:before{ content:"👜"; }
+
+
 
 	</style>
 </head>
@@ -70,132 +152,250 @@
 </tr>
 <tr>
 <th>0</th>
-<td class="d7"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d5"></td>
-<td class="dC"></td>
-<td class="dC door door-green door-north"></td>
-<td class="dD item item-greenkey enemy enemy-eyeballmonster"></td>
-<td class="d5"></td>
+<td class="d7">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d5">
+</td>
+<td class="dC">
+</td>
+<td class="dC door-green-north">
+</td>
+<td class="dD item item-greenkey enemy enemy-eyeballmonster">
+<span title="Item: greenkey" class="item item-greenkey"> </span>
+<span title="Enemy: eyeballmonster" class="enemy enemy-eyeballmonster"> </span>
+</td>
+<td class="d5">
+</td>
 </tr>
 <tr>
 <th>1</th>
-<td class="d9"></td>
-<td class="d7"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="dB enemy enemy-willowisp"></td>
-<td class="dA"></td>
-<td class="d3"></td>
-<td class="d3 enemy enemy-icestatue"></td>
-<td class="d6"></td>
-<td class="d8"></td>
+<td class="d9">
+</td>
+<td class="d7">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="dB enemy enemy-willowisp">
+<span title="Enemy: willowisp" class="enemy enemy-willowisp"> </span>
+</td>
+<td class="dA">
+</td>
+<td class="d3">
+</td>
+<td class="d3 enemy enemy-icestatue">
+<span title="Enemy: icestatue" class="enemy enemy-icestatue"> </span>
+</td>
+<td class="d6">
+</td>
+<td class="d8">
+</td>
 </tr>
 <tr>
 <th>2</th>
-<td class="dA"></td>
-<td class="d3"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d5"></td>
+<td class="dA">
+</td>
+<td class="d3">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d5">
+</td>
 </tr>
 <tr>
 <th>3</th>
-<td class="dC"></td>
-<td class="dC"></td>
-<td class="dD"></td>
-<td class="d5"></td>
-<td class="d7 door door-orange door-east"></td>
-<td class="d1"></td>
-<td class="d1"></td>
-<td class="d1"></td>
-<td class="d5"></td>
-<td class="d9 door door-yellow door-north"></td>
+<td class="dC">
+</td>
+<td class="dC">
+</td>
+<td class="dD">
+</td>
+<td class="d5">
+</td>
+<td class="d7 door-orange-east">
+</td>
+<td class="d1">
+</td>
+<td class="d1">
+</td>
+<td class="d1">
+</td>
+<td class="d5">
+</td>
+<td class="d9 door-yellow-north">
+</td>
 </tr>
 <tr>
 <th>4</th>
-<td class="d9"></td>
-<td class="d4"></td>
-<td class="d6"></td>
-<td class="d0"></td>
-<td class="d8"></td>
-<td class="d9"></td>
-<td class="d9"></td>
-<td class="dE enemy enemy-shadowcreature"></td>
-<td class="d4"></td>
-<td class="d8"></td>
+<td class="d9">
+</td>
+<td class="d4">
+</td>
+<td class="d6">
+</td>
+<td class="d0">
+</td>
+<td class="d8">
+</td>
+<td class="d9">
+</td>
+<td class="d9">
+</td>
+<td class="dE enemy enemy-shadowcreature">
+<span title="Enemy: shadowcreature" class="enemy enemy-shadowcreature"> </span>
+</td>
+<td class="d4">
+</td>
+<td class="d8">
+</td>
 </tr>
 <tr>
 <th>5</th>
-<td class="dA"></td>
-<td class="d8"></td>
-<td class="dC item item-orangekey"></td>
-<td class="dA"></td>
-<td class="d5"></td>
-<td class="d9"></td>
-<td class="dE item item-magicsunglasses"></td>
-<td class="dD item item-yellowkey enemy enemy-willowisp"></td>
-<td class="d8"></td>
-<td class="dC item item-pepperspay"></td>
+<td class="dA">
+</td>
+<td class="d8">
+</td>
+<td class="dC item item-orangekey">
+<span title="Item: orangekey" class="item item-orangekey"> </span>
+</td>
+<td class="dA">
+</td>
+<td class="d5">
+</td>
+<td class="d9">
+</td>
+<td class="dE item item-magicsunglasses">
+<span title="Item: magicsunglasses" class="item item-magicsunglasses"> </span>
+</td>
+<td class="dD item item-yellowkey enemy enemy-willowisp">
+<span title="Item: yellowkey" class="item item-yellowkey"> </span>
+<span title="Enemy: willowisp" class="enemy enemy-willowisp"> </span>
+</td>
+<td class="d8">
+</td>
+<td class="dC item item-pepperspray">
+<span title="Item: pepperspray" class="item item-pepperspray"> </span>
+</td>
 </tr>
 <tr>
 <th>6</th>
-<td class="d7"></td>
-<td class="d6"></td>
-<td class="d8"></td>
-<td class="d7"></td>
-<td class="d8"></td>
-<td class="dA"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d6"></td>
-<td class="d8"></td>
+<td class="d7">
+</td>
+<td class="d6">
+</td>
+<td class="d8">
+</td>
+<td class="d7">
+</td>
+<td class="d8">
+</td>
+<td class="dA">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d6">
+</td>
+<td class="d8">
+</td>
 </tr>
 <tr>
 <th>7</th>
-<td class="d9 enemy enemy-shadowcreature"></td>
-<td class="d7"></td>
-<td class="d6"></td>
-<td class="d8 enemy enemy-icestatue"></td>
-<td class="dC"></td>
-<td class="d7"></td>
-<td class="d5"></td>
-<td class="d7"></td>
-<td class="d1"></td>
-<td class="d5 item item-rustysword"></td>
+<td class="d9 enemy enemy-shadowcreature">
+<span title="Enemy: shadowcreature" class="enemy enemy-shadowcreature"> </span>
+</td>
+<td class="d7">
+</td>
+<td class="d6">
+</td>
+<td class="d8 enemy enemy-icestatue">
+<span title="Enemy: icestatue" class="enemy enemy-icestatue"> </span>
+</td>
+<td class="dC">
+</td>
+<td class="d7">
+</td>
+<td class="d5">
+</td>
+<td class="d7">
+</td>
+<td class="d1">
+</td>
+<td class="d5 item item-rustysword">
+<span title="Item: rustysword" class="item item-rustysword"> </span>
+</td>
 </tr>
 <tr>
 <th>8</th>
-<td class="d9"></td>
-<td class="d9"></td>
-<td class="d7"></td>
-<td class="d1"></td>
-<td class="d8 enemy enemy-mummy"></td>
-<td class="dE item item-redkey enemy enemy-mouthmonster"></td>
-<td class="d4"></td>
-<td class="d2"></td>
-<td class="d9"></td>
-<td class="d9"></td>
+<td class="d9">
+</td>
+<td class="d9">
+</td>
+<td class="d7">
+</td>
+<td class="d1">
+</td>
+<td class="d8 enemy enemy-mummy">
+<span title="Enemy: mummy" class="enemy enemy-mummy"> </span>
+</td>
+<td class="dE item item-redkey enemy enemy-mouthmonster">
+<span title="Item: redkey" class="item item-redkey"> </span>
+<span title="Enemy: mouthmonster" class="enemy enemy-mouthmonster"> </span>
+</td>
+<td class="d4">
+</td>
+<td class="d2">
+</td>
+<td class="d9">
+</td>
+<td class="d9">
+</td>
 </tr>
 <tr>
 <th>9</th>
-<td class="dA"></td>
-<td class="d3"></td>
-<td class="d8"></td>
-<td class="dA"></td>
-<td class="d6"></td>
-<td class="d6 door door-red door-west"></td>
-<td class="d8"></td>
-<td class="dE enemy enemy-goblinhermit"></td>
-<td class="dE"></td>
-<td class="dE item item-bagofholding"></td>
+<td class="dA">
+</td>
+<td class="d3">
+</td>
+<td class="d8">
+</td>
+<td class="dA">
+</td>
+<td class="d6">
+</td>
+<td class="d6 door-red-west">
+</td>
+<td class="d8">
+</td>
+<td class="dE enemy enemy-goblinhermit">
+<span title="Enemy: goblinhermit" class="enemy enemy-goblinhermit"> </span>
+</td>
+<td class="dE">
+</td>
+<td class="dE item item-bagofholding">
+<span title="Item: bagofholding" class="item item-bagofholding"> </span>
+</td>
 </tr>
 </table>

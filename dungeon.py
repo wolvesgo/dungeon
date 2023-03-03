@@ -80,7 +80,7 @@ dungeon[5][2]['item'] = 'orangekey'
 dungeon[5][7]['item'] = 'yellowkey'
 dungeon[0][8]['item'] = 'greenkey'
 dungeon[5][6]['item'] = 'magicsunglasses'
-dungeon[5][9]['item'] = 'pepperspay'
+dungeon[5][9]['item'] = 'pepperspray'
 
 
 dungeon[9][5]['door'] = {'color':'red', 'wall':'west'}
@@ -93,6 +93,9 @@ dungeon[0][7]['door'] = {'color':'green', 'wall':'north'}
 # 
 def printmap(dungeon):
     print('<table>')
+
+    items = []
+    enemies = []
 
     done_header = False
 
@@ -111,14 +114,32 @@ def printmap(dungeon):
             css = []
             css.append('d' + x["openings"])
             if x['door'] != None:
-                css.append("door door-" + x['door']['color'] + " door-" + x['door']['wall'])
+                css.append("door-" + x['door']['color'] + "-" + x['door']['wall'])
             if x['item'] != None:
                 css.append("item item-" + x['item'])
+                items.append('item-' + x['item'])
             if x['enemy'] != None:
                 css.append("enemy enemy-" + x['enemy'])
-            print('<td class="' + " ".join(css) + '"></td>')
+                enemies.append('enemy-' + x['enemy'])
+
+            print('<td class="' + " ".join(css) + '">')
+
+            if x['item'] != None:
+                print('<span title="Item: ' + x['item'] + '" class="item item-' + x['item'] + '"> </span>')
+
+            if x['enemy'] != None:
+                print('<span title="Enemy: ' + x['enemy'] + '" class="enemy enemy-' + x['enemy'] + '"> </span>')
+
+            print('</td>')
         print('</tr>')
     print('</table>')
+
+    # print('<style>')
+    # for e in enemies:
+    #     print('span.' + e + ':before{  }')
+    # for i in items:
+    #     print('span.' + i + ':before {  }')
+    # print('</style>')
 
 if (len(sys.argv) > 1 and sys.argv[1] == "map"):
     printmap(dungeon)
@@ -137,7 +158,7 @@ lookwords = ['look','examine','glance','check']
 bagwords = ['bag','sack','holding','inventory']
 usewords = ['use','cast','open','unlock','sword','spell','book','magic','light','glases','sunglasses','pepper','spray'] 
 attackwords = ['attack','kill','smite','destroy','punch','kick','fight','throw','shoot']
-movementwords = ['n','e','s','w','north','east','south','west']
+movementwords = ['n','e','s','w','north','east','south','west','up','u','down','d','left','l','right','r']
 collectionwords = ['pick up','get','fetch','collect','hold','grab']
 helpwords = ['help'] 
 
@@ -212,7 +233,7 @@ while(not dead and not escaped):
 
         current_room = dungeon[ current_loc[0] ][ current_loc[1] ]
 
-        if ( "north" in action or "n" in action ): 
+        if ( "north" in action or "n" in action or 'u' in action or 'up' in action): 
 
             if (current_room['openings'] in north_doors ): 
 
@@ -229,7 +250,7 @@ while(not dead and not escaped):
 
 
 
-        elif ( "east" in action  or "e" in action ):
+        elif ( "east" in action  or "e" in action or 'r' in action or 'right' in action):
             if (current_room['openings'] in east_doors ): 
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'east':
@@ -241,7 +262,7 @@ while(not dead and not escaped):
             else:
                 print("Your head probably hurts.")
 
-        elif ( "south" in action or "s" in action ): 
+        elif ( "south" in action or "s" in action or 'down' in action or 'd' in action): 
             if (current_room['openings'] in south_doors ): 
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'south':
@@ -253,7 +274,7 @@ while(not dead and not escaped):
             else:
                 print("Those are bricks. Try annother direction.")
 
-        elif ( "west" in action  or "w" in action ):
+        elif ( "west" in action  or "w" in action or 'left' in action or 'l' in action):
             if (current_room['openings'] in west_doors ): 
                 if current_room['door'] != None and current_room['door']['wall'] == 'west':
                     # handle a locked door
