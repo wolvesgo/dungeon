@@ -3,10 +3,11 @@
 import sys
 
 # TODO:
-# Help text
+# Make monsters actions more individual
 # Make look show descriptions of items instead of bare names
+# Help text
 # Pick up 
-# If user tries to leave the room while there is a monster, it kills them, or something
+# Attack
 
 
 # Wall codes
@@ -26,6 +27,26 @@ import sys
 # D - North, South and West
 # E - East, South and West
 # F - North, East, South and West
+
+english_walls = {}
+
+english_walls['0'] = "O Walls"
+english_walls['1'] = "North "
+english_walls['2'] = "East "
+english_walls['3'] = "South"
+english_walls['4'] = "West"
+english_walls['5'] = "North and East"
+english_walls['6'] = "North and South"
+english_walls['7'] = "North and West"
+english_walls['8'] = "East and South"
+english_walls['9'] = "East and West"
+english_walls['A'] = "South and West"
+english_walls['B'] = "North, East and South"
+english_walls['C'] = "North, East and West"
+english_walls['D'] = "North, South and West"
+english_walls['E'] = "East, South and West"
+english_walls['F'] = "North, East, South and West"
+
 
 north_doors = ['0','2','3','4','8','9','A','E']
 east_doors =  ['0','1','3','4','6','7','A','D']
@@ -53,12 +74,64 @@ for y in range(0,10):
     dungeon.append([])
     for x in range(0,10):
         dungeon[y].append({
+                    "x": x,
+                    "y": y,
                     "loc"  : str(x) + ":" + str(y),
                     "enemy" : None,
                     "item" : None,
-                    "openings" : walls[(y * 10) + x],
+                    "walls" : walls[(y * 10) + x],
+                    "walls_english" : english_walls[walls[(y * 10) + x]],
                     "door": None
                 })
+
+
+
+book_of_enemies = {
+        'goblinhermit': {
+                'name': "goblin hermit",
+                'weapons': ['rustysword','spellbook']
+            },
+        'mouthmonster':{
+                'name': "Mouth Monster",
+                'weapons': ['rustysword']
+            },
+        'mummy':{
+                'name': "Mummy",
+                'weapons': ['spellbook']
+            },
+
+        'icestatue':{
+                'name': "Ice Statue",
+                'weapons': ['rustysword']
+            },
+
+        'shadowcreature':{
+                'name': "Shadow Creature",
+                'weapons': ['spellbook']
+            },
+
+        'willowisp':{
+                'name': "Willow Wisp",
+                'weapons': ['magicsunglasses']
+            },
+
+        'eyeballmonster':{
+                'name': "Eyeball Monster",
+                'weapons': ['pepperspray']
+            }
+        }
+
+book_of_items = {
+        'bagofholding': { 'name': 'Bag of Holding', 'short':'Bag' },
+        'rustysword': { 'name': 'Rusty Sword','short':'Sword' },
+        'redkey': { 'name': 'Red Key','short':'Red' },
+        'spellbook': { 'name': 'Spell Book','short':'Book' },
+        'orangekey': { 'name': 'Orange Key','short':'Orange' },
+        'yellowkey': { 'name': 'Yellow Key','short':'Yellow'},
+        'greenkey': { 'name': 'Green Key','short':'Green'},
+        'magicsunglasses': { 'name': 'Magic Sun Glasses','short':'Glasses' },
+        'pepperspray': { 'name': 'Pepper Spray','short':'Spray' }
+}
 
 dungeon[9][7]['enemy'] = 'goblinhermit'
 dungeon[8][5]['enemy'] = 'mouthmonster'
@@ -70,7 +143,6 @@ dungeon[5][7]['enemy'] = 'willowisp'
 dungeon[1][4]['enemy'] = 'willowisp'
 dungeon[1][7]['enemy'] = 'icestatue'
 dungeon[0][8]['enemy'] = 'eyeballmonster'
-
 
 dungeon[9][9]['item'] = 'bagofholding'
 dungeon[7][9]['item'] = 'rustysword'
@@ -112,7 +184,7 @@ def printmap(dungeon):
         print('<th>' + str(yidx) + '</th>')
         for xidx,x in enumerate(y):
             css = []
-            css.append('d' + x["openings"])
+            css.append('d' + x["walls"])
             if x['door'] != None:
                 css.append("door-" + x['door']['color'] + "-" + x['door']['wall'])
             if x['item'] != None:
@@ -156,8 +228,12 @@ current_loc = [9,9]
 
 lookwords = ['look','examine','glance','check']
 bagwords = ['bag','sack','holding','inventory']
-usewords = ['use','cast','open','unlock','sword','spell','book','magic','light','glases','sunglasses','pepper','spray'] 
-attackwords = ['attack','kill','smite','destroy','punch','kick','fight','throw','shoot']
+
+# Use should be anything that isn't against a monster (so probs just they keys?)
+usewords = ['use','cast','open','unlock'] 
+
+# Attack word should be anything that is used offensively or defensively
+attackwords = ['attack','kill','smite','destroy','punch','kick','fight','throw','shoot','sword','spell','book','magic','light','glases','sunglasses','pepper','spray']
 movementwords = ['n','e','s','w','north','east','south','west','up','u','down','d','left','l','right','r']
 collectionwords = ['pick up','get','fetch','collect','hold','grab']
 helpwords = ['help'] 
@@ -180,19 +256,19 @@ while(not dead and not escaped):
 
         # current_room['enemy'] == None
         # current_room['item']
-        # current_room['openings']
+        # current_room['walls']
         # current_room['door']
 
 
         doors = []
 
-        if ( current_room['openings'] in north_doors ):
+        if ( current_room['walls'] in north_doors ):
             doors.append('North')
-        if ( current_room['openings'] in east_doors ):
+        if ( current_room['walls'] in east_doors ):
             doors.append('East')
-        if ( current_room['openings'] in south_doors ):
+        if ( current_room['walls'] in south_doors ):
             doors.append('South')
-        if ( current_room['openings'] in west_doors ):
+        if ( current_room['walls'] in west_doors ):
             doors.append('West')
 
         print("You are in a twisty maze. The stone walls make you feel trapped.")
@@ -222,7 +298,9 @@ while(not dead and not escaped):
             
             for item in items:
                 if item != "bagofholding": 
-                    print(" * " + item)
+                    print(" * " + book_of_items[item]['short'] + ' - ' + book_of_items[item]['name'])
+
+            print("Use the one-word name when using or attacking with items")
 
     # Use, Cast, Attack, Open, Unlock
     elif ( len( set(action) & set(usewords) ) > 0 ): 
@@ -233,13 +311,30 @@ while(not dead and not escaped):
 
         current_room = dungeon[ current_loc[0] ][ current_loc[1] ]
 
+        # {
+        #    'x': 7, 
+        #    'y': 9, 
+        #    'loc': '7:9', 
+        #    'enemy': 'goblinhermit', 
+        #    'item': None, 
+        #    'walls': 'E', 
+        #    'walls_english': 'East, South and West', 
+        #    'door': None
+        # }
+
+        if (current_room['enemy'] != None):
+            print("The monter says 'YOLO'")
+            dead = True
+            continue 
+
+
         if ( "north" in action or "n" in action or 'u' in action or 'up' in action): 
 
-            if (current_room['openings'] in north_doors ): 
+            if (current_room['walls'] in north_doors ): 
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'north':
                     # handle a locked door
-                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
+                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a " + current_room['door']['color'] + " door!")
                 else:
                     print("Going north")
                     current_loc[0] = current_loc[0] - 1
@@ -247,11 +342,8 @@ while(not dead and not escaped):
             else:
                 print("That looks like a wall. It's not going to work")
 
-
-
-
         elif ( "east" in action  or "e" in action or 'r' in action or 'right' in action):
-            if (current_room['openings'] in east_doors ): 
+            if (current_room['walls'] in east_doors ): 
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'east':
                     # handle a locked door
@@ -263,7 +355,7 @@ while(not dead and not escaped):
                 print("Your head probably hurts.")
 
         elif ( "south" in action or "s" in action or 'down' in action or 'd' in action): 
-            if (current_room['openings'] in south_doors ): 
+            if (current_room['walls'] in south_doors ): 
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'south':
                     # handle a locked door
@@ -275,7 +367,7 @@ while(not dead and not escaped):
                 print("Those are bricks. Try annother direction.")
 
         elif ( "west" in action  or "w" in action or 'left' in action or 'l' in action):
-            if (current_room['openings'] in west_doors ): 
+            if (current_room['walls'] in west_doors ): 
                 if current_room['door'] != None and current_room['door']['wall'] == 'west':
                     # handle a locked door
                     print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
@@ -292,6 +384,27 @@ while(not dead and not escaped):
 
     # Attack
     elif ( len( set(action) & set(attackwords) ) > 0 ):
+
+        # Which enemy is it?
+        # Did the user specify a weapon that can kill the current enemy
+        # If success: Delete enemy and print success message
+        # If failure: Dead
+
+        # current_room = {
+        #    'x': 7, 
+        #    'y': 9, 
+        #    'loc': '7:9', 
+        #    'enemy': 'goblinhermit', 
+        #    'item': None, 
+        #    'walls': 'E', 
+        #    'walls_english': 'East, South and West', 
+        #    'door': None
+        # }
+
+        current_room = dungeon[ current_loc[0] ][ current_loc[1] ]
+
+        print(action)
+
         print("attacking...")
 
     # Help
@@ -326,12 +439,13 @@ while(not dead and not escaped):
             
             items.append(dungeon[current_loc[0]][current_loc[1]]['item'])
             dungeon[current_loc[0]][current_loc[1]]['item'] = None
-
+    
+    elif( len( set(action) & set(["debug"])) > 0):
+        import pdb
+        pdb.set_trace()
     
     else:
         print("I don't know what to do")
-
-
 
 if ( dead ): 
     print("You dead")
