@@ -194,7 +194,8 @@ def printmap(dungeon):
                 css.append("enemy enemy-" + x['enemy'])
                 enemies.append('enemy-' + x['enemy'])
 
-            print('<td class="' + " ".join(css) + '">')
+            tdline = '<td class="' + " ".join(css) + '">'
+            print(tdline)
 
             if x['item'] != None:
                 print('<span title="Item: ' + x['item'] + '" class="item item-' + x['item'] + '"> </span>')
@@ -230,10 +231,10 @@ lookwords = ['look','examine','glance','check']
 bagwords = ['bag','sack','holding','inventory']
 
 # Use should be anything that isn't against a monster (so probs just they keys?)
-usewords = ['use','cast','open','unlock'] 
+usewords = ['open','unlock']
 
 # Attack word should be anything that is used offensively or defensively
-attackwords = ['attack','kill','smite','destroy','punch','kick','fight','throw','shoot','sword','spell','book','magic','light','glases','sunglasses','pepper','spray']
+attackwords = ['attack','kill','smite','destroy','punch','kick','fight','throw','shoot','sword','spell','book','magic','light','glases','sunglasses','pepper','spray','cast','use']
 movementwords = ['n','e','s','w','north','east','south','west','up','u','down','d','left','l','right','r']
 collectionwords = ['pick up','get','fetch','collect','hold','grab']
 helpwords = ['help'] 
@@ -403,9 +404,33 @@ while(not dead and not escaped):
 
         current_room = dungeon[ current_loc[0] ][ current_loc[1] ]
 
-        print(action)
+        if current_room['enemy'] == None :
+            print("As you draw your item, you feel a force against your conscience,'No... Now is not the time.'")
 
-        print("attacking...")
+
+        else :
+
+            current_monster = book_of_enemies[current_room['enemy']]
+
+            print(action)
+
+            used = (set(action) & set(current_monster['weapons']))
+
+            if len(used) == 0:
+
+                print("Your Item flails about uselessly. What else ya' got in your Bag'o'Holding?")
+
+            else :
+                used = used.pop()
+
+
+
+                print("You used the " + book_of_items[used]['name'] + " against the " + current_monster['name'] + ". You hear a horrific wail as its vengeful spirit leaves the mortal world.")
+
+                dungeon[ current_loc[0] ][ current_loc[1] ]['enemy'] = None
+
+
+
 
     # Help
     elif ( len( set(action) & set(helpwords) ) > 0 ):
@@ -417,7 +442,6 @@ while(not dead and not escaped):
         # current_loc = [9,9]
         # dungeon[9][9]['item'] = 'bagofholding'
         # items = []
-
         # 1. Use the current location to check if there is anything in the current room
         # 2. If there is something in the current room, then:
         #  20. If the user doesn't have the bagofholding, print "Gee, it'd be nice if you had a bag to put that in"
