@@ -54,7 +54,7 @@ south_doors = ['0','1','2','4','5','7','9','C']
 west_doors =  ['0','1','2','3','5','6','8','B']
 
 walls = """
-766665CCD5
+766665C9D5
 9766BA3368
 A366666665
 CCD5711159
@@ -135,7 +135,7 @@ book_of_items = {
 
 dungeon[9][7]['enemy'] = 'goblinhermit'
 dungeon[8][5]['enemy'] = 'mouthmonster'
-dungeon[8][4]['enemy'] = 'mummy'
+dungeon[7][4]['enemy'] = 'mummy'
 dungeon[7][3]['enemy'] = 'icestatue'
 dungeon[7][0]['enemy'] = 'shadowcreature'
 dungeon[4][7]['enemy'] = 'shadowcreature'
@@ -147,7 +147,7 @@ dungeon[0][8]['enemy'] = 'eyeballmonster'
 dungeon[9][9]['item'] = 'bagofholding'
 dungeon[7][9]['item'] = 'rustysword'
 dungeon[8][5]['item'] = 'redkey'
-dungeon[7][4]['iten'] = 'spellbook'
+dungeon[8][4]['item'] = 'spellbook'
 dungeon[5][2]['item'] = 'orangekey'
 dungeon[5][7]['item'] = 'yellowkey'
 dungeon[0][8]['item'] = 'greenkey'
@@ -313,18 +313,39 @@ while(not dead and not escaped):
         # If no door, do what? 
         # If yes door,: 
         #    check if door color matches specified key
-        if current_room['door'] ['color']== 'red' :
-              print("")
-            #if 'redekey' in 'bag' :
-            #print ("You pull out your Red Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
-        elif current_room['door'] ['color']== 'orange' :
-            print("You pull out your Orange Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
 
-        elif current_room['door'] ['color']== 'yellow' :
-            print("You pull out your Yellow Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
-
-        elif current_room['door'] ['color']== 'green' :
-            print("You pull out your Green Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+        if current_room['door'] == None: 
+            print("""You fumble with the key while you try to fit it between the stones. 
+                  When you finally get it to fit, there is a grinding sound.
+                  You wait a minute, and when nothing happens, you pull out the key to inspect it.
+                  You see that the key tip is now mangled beyond recognition.
+                  Next time, find a door.""")
+        else:
+            if current_room['door'] ['color']== 'red' :
+                    if 'redkey' in items:
+                        print ("You pull out your Red Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+                        dungeon[ current_loc[0] ][ current_loc[1] ]['door'] = None
+                    else:
+                        print("You stick your finger in the red door's keyhole and it almost gets stuck. Better not do that again.")
+            elif current_room['door'] ['color']== 'orange' :
+                    if 'orangekey' in items:
+                        print("You pull out your Orange Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+                        dungeon[ current_loc[0] ][ current_loc[1] ]['door'] = None
+                    else:
+                        print("You stick your finger in the orange door's keyhole and it almost gets stuck. Better not do that again.")
+            elif current_room['door'] ['color']== 'yellow' :
+                    if 'yellowkey' in items:
+                        print("You pull out your Yellow Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+                        dungeon[ current_loc[0] ][ current_loc[1] ]['door'] = None
+                    else:
+                        print("You stick your finger in the yellow door's keyhole and it almost gets stuck. Better not do that again.")
+            elif current_room['door'] ['color']== 'green' :
+                    if 'greenkey' in items:
+                        print("You pull out your Green Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+                        dungeon[ current_loc[0] ][ current_loc[1] ]['door'] = None
+                        escaped = True
+                    else:
+                        print("You stick your finger in the green door's keyhole and it almost gets stuck. Better not do that again.")
 
 
 
