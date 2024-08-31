@@ -26,7 +26,7 @@ import sys
 # C - North, East and West
 # D - North, South and West
 # E - East, South and West
-# F - North, East, South and West
+# F - North, East, South a# Words!")
 
 english_walls = {}
 
@@ -162,7 +162,7 @@ dungeon[0][7]['door'] = {'color':'green', 'wall':'north'}
 
 
 # print(dungeon)
-# 
+# Words!")
 def printmap(dungeon):
     print('<table>')
 
@@ -194,7 +194,7 @@ def printmap(dungeon):
                 css.append("enemy enemy-" + x['enemy'])
                 enemies.append('enemy-' + x['enemy'])
 
-            tdline = '<td class="' + " ".join(css) + '">'
+            tdline = '<td class="' + ' '.join(css) + '">'
             print(tdline)
 
             if x['item'] != None:
@@ -239,6 +239,7 @@ movementwords = ['n','e','s','w','north','east','south','west','up','u','down','
 collectionwords = ['pick up','get','fetch','collect','hold','grab']
 helpwords = ['help'] 
 
+print("Welcome to the dungeon. What do you want to do?")
 
 while(not dead and not escaped): 
 
@@ -249,7 +250,9 @@ while(not dead and not escaped):
 
     # Taking input from the user
     # Taking input from the user
-    action = input("> ").lower().split()
+    action = input("> ")
+    action = action.lower()
+    action = action.split()
 
     # Look
     if ( len( set(action) & set(lookwords) ) > 0 ):
@@ -295,7 +298,7 @@ while(not dead and not escaped):
         else:
             # Print something about the items you have
             # itmes = ["bagofholding","rustysword","spellbook"]
-            print("So far, you have these in your vaguely bag saped item:")
+            print("So far, you have these in your vaguely bag shaped item:")
             
             for item in items:
                 if item != "bagofholding": 
@@ -305,7 +308,31 @@ while(not dead and not escaped):
 
     # Use, Cast, Attack, Open, Unlock
     elif ( len( set(action) & set(usewords) ) > 0 ): 
-        print("Doing use words code")
+        # TODO# Get the current room
+        # Get the current door
+        # If no door, do what? 
+        # If yes door,: 
+        #    check if door color matches specified key
+        if current_room['door'] ['color']== 'red' :
+              print("")
+            #if 'redekey' in 'bag' :
+            #print ("You pull out your Red Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+        elif current_room['door'] ['color']== 'orange' :
+            print("You pull out your Orange Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+
+        elif current_room['door'] ['color']== 'yellow' :
+            print("You pull out your Yellow Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+
+        elif current_room['door'] ['color']== 'green' :
+            print("You pull out your Green Key and stick it into the key hole. The Door vanishes with a faint 'pop', and your key drops back into your hand.")
+
+
+
+
+
+
+
+ 
 
     # North, East, South, West
     elif ( len( set(action) & set(movementwords) ) > 0 ):
@@ -335,7 +362,7 @@ while(not dead and not escaped):
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'north':
                     # handle a locked door
-                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a " + current_room['door']['color'] + " door!")
+                    print("Is it a novelty to smash you head into something other than wood? If you look up, you'll see a " + current_room['door']['color'] + " door!")
                 else:
                     print("Going north")
                     current_loc[0] = current_loc[0] - 1
@@ -348,7 +375,7 @@ while(not dead and not escaped):
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'east':
                     # handle a locked door
-                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
+                    print("Is it a novelty to smash you head into something other than wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
                 else: 
                     print("Going east")
                     current_loc[1] = current_loc[1] +1
@@ -360,7 +387,7 @@ while(not dead and not escaped):
 
                 if current_room['door'] != None and current_room['door']['wall'] == 'south':
                     # handle a locked door
-                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
+                    print("Is it a novelty to smash you head into something other than wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
                 else:
                     print("Going south")
                     current_loc[0] = current_loc[0] + 1
@@ -371,7 +398,7 @@ while(not dead and not escaped):
             if (current_room['walls'] in west_doors ): 
                 if current_room['door'] != None and current_room['door']['wall'] == 'west':
                     # handle a locked door
-                    print("Is it a novelty to smash you head into something othe then wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
+                    print("Is it a novelty to smash you head into something other than wood? If you look up, you'll see a" + current_room['door']['color'] + "door!")
                 else:
                     print("Going west")
                     current_loc[1] = current_loc[1] - 1
@@ -434,7 +461,18 @@ while(not dead and not escaped):
 
     # Help
     elif ( len( set(action) & set(helpwords) ) > 0 ):
-        print("helping...")
+        print("Welcome to the Help section of Dungeon! Here are somethings you need to know!")
+        print("Words!*")
+        print("Look Words: Look, Examine, Glance, Check")
+        print("Bag Words: Bag, Sack, Holding, Inventory")
+        print("Use Words: Open, Unlock")
+        print("Attack Words: Attack, Kill, Smite, Destroy, Punch, Kick, Fight, Throw, Shoot, Sword, Spell, Book, Magic, Light, Glasses, Sunglasses, Pepper, Spray, Use, Cast")
+
+
+
+
+
+
 
     # Grabbing
     elif ( len( set(action) & set(collectionwords) ) > 0 ):
@@ -475,5 +513,5 @@ if ( dead ):
     print("You dead")
 
 elif( escaped ):
-    print("Yay, sweet freedom! ohwait, is that annother door???")
+    print("Yay, sweet freedom! oh, wait, is that annother door???")
 
